@@ -30,16 +30,30 @@ export default function Home() {
     if (!(nameError || mailError || mobileError || showError)) {
       console.log('Data: ', name, '\n', mobile, '\n', message, '\n', email);
       // Add additional logic for handling the form data
+      let formData = new FormData();
+      formData.append('Name', name);
+      formData.append('Mobile', mobile);
+      formData.append('Email', email);
+      formData.append('Message', message);
+
+      fetch('https://script.google.com/macros/s/AKfycbxqdiZuM181dezKSmD05jMSWK7l4hk6yGJZUfNg2M0f4ipa8RD-9DYlQ4Kwje0o2IkV/exec',{
+        method:'POST',
+        body: formData
+      }).then((res)=>{
+         window.alert('Data is Successfully send');
+         window.location.reload()
+         
+      }).catch(err => console.log(err));
     }
   };
 
   return (
-    <div className="flex flex-row w-full justify-around items-center font-serif bg-slate-300">
-      <section className="flex justify-center items-center w-2/3">
+    <div className="sm:flex flex-row w-full justify-around items-center font-serif bg-slate-300">
+      <section className="flex justify-center items-center sm:w-2/3 sm:h-1/2">
         <Logo />
       </section>
-      <section className="justify-center items-center flex flex-col bg-violet-400 w-1/3 h-full rounded-xl">
-        <div className="justify-start font-serif text-4xl mb-5">Create Account</div>
+      <section className="justify-center items-center flex flex-col bg-violet-400 sm:w-1/3 h-full rounded-xl">
+        <div className="justify-start font-serif text-2xl md:text-4xl mb-5">Create Account</div>
 
         <CustomInput
           label="Name"
